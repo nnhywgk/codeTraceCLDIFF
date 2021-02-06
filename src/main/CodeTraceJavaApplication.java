@@ -1,4 +1,4 @@
-package cn.edu.fudan.codeTraceJava;
+package main;
 
 
 import edu.fdu.se.base.common.Global;
@@ -36,6 +36,7 @@ public class CodeTraceJavaApplication {
 
 
         String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceCLDIFF-output";
+        Global.runningMode = 0;
 
         String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
 
