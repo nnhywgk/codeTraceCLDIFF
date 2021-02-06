@@ -35,34 +35,15 @@ public class CodeTraceJavaApplication {
 		FindBranch findBranch = new FindBranch(repoPath);
 
 
-//        String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceJava-output";
-//
-//        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
-//
-//        for(String str:commitId){
-//            System.out.println(str);
-//            CLDiffLocal CLDiffLocal = new CLDiffLocal();
-//            CLDiffLocal.run(str,repoPath,outputDir);
-//        }
+        String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceCLDIFF-output";
 
-//		String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceJava-output";
-//
-//		CLDiffCore clDiffCore = new CLDiffCore(repoPath, "8f8503f353fd96dbe14bc40cf6b68cc14456d293", outputDir);
-//		clDiffCore.executeCLDiff();
+        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
 
-
-//
-//		List<String> commitId=new ArrayList<>();
-//		for(int i=0;i<20000;i++){
-//			commitId.add("4c3e4eee76231911bee146a5f437cc42e9026a3e");
-//		}
-//
-//
-//
-//		for(String str:commitId){
-//			CLDiffCore clDiffCore = new CLDiffCore(repoPath, str, outputDir);
-//			clDiffCore.executeCLDiff();
-//		}
+        for(String str:commitId){
+            System.out.println(str);
+            CLDiffLocal CLDiffLocal = new CLDiffLocal();
+            CLDiffLocal.run(str,repoPath,outputDir);
+        }
 
 
 
