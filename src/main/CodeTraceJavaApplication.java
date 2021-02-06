@@ -3,7 +3,6 @@ package main;
 
 import edu.fdu.se.base.common.Global;
 import edu.fdu.se.cldiff.CLDiffLocal;
-import main.GitAction.FindBranch;
 import main.GitAction.FindCommit;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.boot.SpringApplication;
@@ -31,8 +30,8 @@ public class CodeTraceJavaApplication {
         commitList = findCommit.getCommitList();
 
 
-        /**********根据仓库地址查找所有的分支**********/
-		FindBranch findBranch = new FindBranch(repoPath);
+//        /**********根据仓库地址查找所有的分支**********/
+//		FindBranch findBranch = new FindBranch(repoPath);
 
 
         String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceCLDIFF-output";
