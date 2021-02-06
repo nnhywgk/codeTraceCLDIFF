@@ -1,0 +1,8 @@
+/bin/
+/target/
+/resource/config.properties
+/.idea/
+/.vscode/
+*.iml
+resource/test/
+src/test/
