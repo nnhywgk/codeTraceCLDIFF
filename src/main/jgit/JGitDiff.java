@@ -3,7 +3,7 @@
  * @author: fancying
  * @create: 2019-06-04 22:37
  **/
-package cn.edu.fudan.jgit;
+package main.jgit;
 
 import java.io.IOException;
 import java.util.List;

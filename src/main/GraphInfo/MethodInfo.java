@@ -22,8 +22,14 @@ public class MethodInfo implements Neo4jInformation{
     @Override
     public List<String> toNeo4jNode(String label) {
         List<String> cqlNodeList = new ArrayList<>();
-        String cql = "CREATE (:" + label + ":method" + "{" +
-                "signature:\"" + signature.replace("\"", "\\\"") +
+//        String cql = "CREATE (:" + label + ":method" + "{" +
+//                "signature:\"" + signature.replace("\"", "\\\"") +
+//                "\",modifier:\"" + modifier +
+//                "\",primitiveType:\""+ primitiveType +
+//                "\",begin:" + begin +
+//                ",end:" + end  + "})";
+        String cql = "CREATE (method:method {" +
+                "signature:\"" + signature.replace("\"", "/") +
                 "\",modifier:\"" + modifier +
                 "\",primitiveType:\""+ primitiveType +
                 "\",begin:" + begin +

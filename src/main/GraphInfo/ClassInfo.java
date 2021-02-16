@@ -25,14 +25,21 @@ public class ClassInfo implements Neo4jInformation{
     @Override
     public List<String> toNeo4jNode(String label) {
         List<String> cqlNodeList = new ArrayList<>();
-        String cql = "CREATE (`" + className + "`:" + label + ":class:`" + filePath + "`{" +
+//        String cql = "CREATE (`" + className + "`:" + label + ":class:`" + filePath + "`{" +
+//                "className:\"" + className +
+//                "\",filePath:\"" + filePath +
+//                "\",modifier:\"" + modifier +
+//                "\",extended:\""+ asString(extendedList) +
+//                "\",implemented:\""+ asString(implementedList) +
+//                "\"})";
+
+        String cql = "CREATE ("+className+":class{" +
                 "className:\"" + className +
                 "\",filePath:\"" + filePath +
                 "\",modifier:\"" + modifier +
                 "\",extended:\""+ asString(extendedList) +
                 "\",implemented:\""+ asString(implementedList) +
                 "\"})";
-
         cqlNodeList.add(cql);
 
         for (MethodInfo methodInfo : methodInfos) {

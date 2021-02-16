@@ -3,7 +3,7 @@
  * @author: fancying
  * @create: 2019-06-05 17:16
  **/
-package cn.edu.fudan.jgit;
+package main.jgit;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
@@ -30,7 +30,7 @@ public class JGitHelper {
     public JGitHelper(String repoPath) {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         try {
-            repository = builder.setGitDir(new File(repoPath + "\\.git"))
+            repository = builder.setGitDir(new File(repoPath + "/.git"))
                     .readEnvironment() // scan environment GIT_* variables
                     .findGitDir() // scan up the file system tree
                     .build();

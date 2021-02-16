@@ -19,7 +19,7 @@ public class FindCommit {
     private static ArrayList commitList =  new ArrayList<String>();  //初始号数组
 
     public FindCommit(String repoPath) throws GitAPIException, IOException {
-        Repository repo = new FileRepository(repoPath);
+        Repository repo = new FileRepository(repoPath+ "/.git");
         Git git = new Git(repo);
         RevWalk walk = new RevWalk(repo);
 

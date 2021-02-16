@@ -31,7 +31,7 @@ public class Extractor {
 
     public Extractor(String path, String projectName) {
         this.projectName = projectName;
-//        classInfos = new HashSet<>();
+        classInfos = new HashSet<>();
         try {
             CompilationUnit compilationUnit = JavaParser.parse(new File(path));
             parsePackageName(compilationUnit);

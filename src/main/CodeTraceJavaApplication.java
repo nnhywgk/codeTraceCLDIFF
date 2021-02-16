@@ -8,6 +8,7 @@ import main.CLDiffAnalysis.AnalyseMeta;
 import main.GitAction.FindCommit;
 import main.GraphBuild.GraphBuilder;
 import main.GraphInfo.ClassInfo;
+import main.jgit.JGitHelper;
 import main.util.DirExplorer;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +35,7 @@ public class CodeTraceJavaApplication {
         graphBuilder = new GraphBuilder(uri, user, password);
     }
 
+
     public static List<String> listClasses(File projectDir) {
         List<String> pathList = new ArrayList<>();
         new DirExplorer((level, path, file) -> path.endsWith(".java"),
@@ -41,38 +43,55 @@ public class CodeTraceJavaApplication {
         return pathList;
     }
 
-//    public void graphConstructionBaseOneCommit(ParseFile parseFile) {
-//
-//        //构造节点
-//        graphBuilder.executeBatchCql(parseFile.createCqlList(true));
-//        graphBuilder.executeBatchCqlStat(parseFile.createCqlMapStat());
-//        System.out.println("node");
-//        //构造关系
-//        graphBuilder.executeBatchCql(parseFile.createCqlList(false));
+    public void graphConstructionBaseOneCommit(ProjectInfoBuilder projectInfo) {
+
+        //构造节点
+        graphBuilder.executeBatchCql(projectInfo.createCqlList(true));
+        System.out.println("node");
+        //构造关系
+//        graphBuilder.executeBatchCql(projectInfo.createCqlList(false));
 //        System.out.println("relation");
-//    }
+    }
 
 
     public static void main(String[] args) throws IOException, GitAPIException {
 
 //        SpringApplication.run(CodeTraceJavaApplication.class, args);
 
-        String repoPath = "/Users/weisun/Documents/毕业工具/codeTraceCLDIFF/.git";
+        String repoPath = "/Users/weisun/Documents/毕业工具/codeTraceCLDIFF";
         String projectName = "codeTraceCLDIFF";
 
         ArrayList commitList =  new ArrayList<String>();
 
+        String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceCLDIFF-output";
+        Global.runningMode = 0;
+
+//      /**********根据仓库地址查找所有的分支**********/
+//		FindBranch findBranch = new FindBranch(repoPath);
+
+        /**********根据仓库地址查找所有的Commit**********/
         FindCommit findCommit = new FindCommit(repoPath);
         commitList = findCommit.getCommitList();
 
-            System.out.println(commitList.get(commitList.size() - 1));
+        /**********获取最初的版本**********/
+        String firstCommit = (String) commitList.get(commitList.size() - 1);
 
-        /**********根据仓库地址查找所有的分支**********/
-//		FindBranch findBranch = new FindBranch(repoPath);
+        CodeTraceJavaApplication codeTraceJavaApplication = new CodeTraceJavaApplication(); //声明一个codeTraceJavaApplication
+        ProjectInfoBuilder curProject;
+        JGitHelper jGitHelper = new JGitHelper(repoPath);
+        String firstCommiter = jGitHelper.getAuthorName(firstCommit);
+        jGitHelper.checkout(firstCommit);
+        curProject = new ProjectInfoBuilder(projectName, firstCommit,firstCommiter , repoPath);
+        codeTraceJavaApplication.graphConstructionBaseOneCommit(curProject);
+
+        System.out.println("test");
 
 
-        String outputDir = "/Users/weisun/Documents/毕业工具/测试项目/codeTraceCLDIFF-output";
-        Global.runningMode = 0;
+
+
+
+
+
 
 //        /**********执行Cldiff产生meta文件**********/
 //        //执行cldiff
