@@ -42,7 +42,8 @@ public class ProjectInfoBuilder {
         for (String path : fileList) {
             Extractor extractor = new Extractor(path, projectName);
             String packageName = extractor.getPackageName();
-            classInfos = extractor.getClassInfos();
+            if(classInfos!=null&& classInfos.size()>=0) classInfos.addAll(extractor.getClassInfos());
+            else classInfos = extractor.getClassInfos();
 //            PackageInfo packageInfo ;
 //            Map<String, PackageInfo> packageInfoMap;
 //            packageInfoMap = new HashMap<>();
@@ -67,7 +68,6 @@ public class ProjectInfoBuilder {
 //                System.out.println("eeee");
 //        }
 
-
     }
 
     private List<String> listJavaFiles(File projectDir) {
@@ -83,6 +83,7 @@ public class ProjectInfoBuilder {
         String label = "`" + projectName + "`:`"+ committer + "`:`" + commit + "':'";
         for (ClassInfo classInfo : classInfos) {
             cqlList.addAll(isNode ? classInfo.toNeo4jNode(label) : classInfo.toNeo4jRelation(label , label));
+
         }
 
 //        for (Map.Entry<String, Map<String, PackageInfo>> packageInfoEntry : moduleInfos.entrySet()) {

@@ -80,7 +80,7 @@ public class CodeTraceJavaApplication {
         ProjectInfoBuilder curProject;
         JGitHelper jGitHelper = new JGitHelper(repoPath);
         String firstCommiter = jGitHelper.getAuthorName(firstCommit);
-        jGitHelper.checkout(firstCommit);
+//        jGitHelper.checkout(firstCommit);
         curProject = new ProjectInfoBuilder(projectName, firstCommit,firstCommiter , repoPath);
         codeTraceJavaApplication.graphConstructionBaseOneCommit(curProject);
 

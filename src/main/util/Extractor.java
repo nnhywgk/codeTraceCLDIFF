@@ -24,6 +24,7 @@ import java.util.*;
 
 public class Extractor {
 
+
     private HashSet<ClassInfo> classInfos;
     private String projectName;
     private String packageName;
@@ -31,7 +32,7 @@ public class Extractor {
 
     public Extractor(String path, String projectName) {
         this.projectName = projectName;
-        classInfos = new HashSet<>();
+//        classInfos = new HashSet<>();
         try {
             CompilationUnit compilationUnit = JavaParser.parse(new File(path));
             parsePackageName(compilationUnit);
@@ -50,6 +51,8 @@ public class Extractor {
     }
 
     private void parseClassInterface(CompilationUnit cu) {
+
+        HashSet<ClassInfo> tempClassInfos = new HashSet<>();
 
         List<ClassOrInterfaceDeclaration> classOrInterfaceDeclarationList = cu.findAll(ClassOrInterfaceDeclaration.class);
         for (ClassOrInterfaceDeclaration classOrInterfaceDeclaration : classOrInterfaceDeclarationList) {
@@ -88,8 +91,10 @@ public class Extractor {
             classInfo.setBegin(classOrInterfaceDeclaration.getBegin().get().line);
             classInfo.setEnd(classOrInterfaceDeclaration.getEnd().get().line);
 
-            classInfos.add(classInfo);
+            tempClassInfos.add(classInfo);
         }
+
+        setClassInfos(tempClassInfos);
     }
 
     private List<MethodInfo> parseMethod(List<MethodDeclaration> methodDeclarations) {
@@ -133,6 +138,10 @@ public class Extractor {
 
     public Set<ClassInfo> getClassInfos() {
         return classInfos;
+    }
+
+    public void setClassInfos(HashSet<ClassInfo> classInfos) {
+        this.classInfos = classInfos;
     }
 
     public String getFileName() {
