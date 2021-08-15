@@ -84,15 +84,32 @@ public class CodeTraceJavaApplication {
         curProject = new ProjectInfoBuilder(projectName, firstCommit,firstCommiter , repoPath);
         codeTraceJavaApplication.graphConstructionBaseOneCommit(curProject);
 
-        System.out.println("test");
+
+        Collections.reverse(commitList);  //翻转列表
+        commitList.remove(0); //去除首个版本
+        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
+        for(String str:commitId){
+            System.out.println(str);
+//            CLDiffLocal CLDiffLocal = new CLDiffLocal();
+//            CLDiffLocal.run(str,repoPath,outputDir);
+//
+//            AnalyseMeta analyseMeta = new AnalyseMeta(outputDir+ "/" + projectName ,"ff515fd998339241c59b9875b4517444d1da0469");
+//            Map<JSONObject, String> diffFileAction = analyseMeta.gitMetaInfo();
+//
+//            for (Map.Entry<JSONObject, String> m : diffFileAction.entrySet()) {
+//                //遍历meta文件中的结果
+//                if (! m.getKey().getString("file_name").endsWith(".java")) {
+//                    continue;
+//                }
+//
+//            }
+        }
 
 
 
-
-
-
-
-
+//
+//
+//
 //        /**********执行Cldiff产生meta文件**********/
 //        //执行cldiff
 //        CLDiffLocal cLDiffLocal = new CLDiffLocal();
@@ -108,9 +125,9 @@ public class CodeTraceJavaApplication {
 //            }
 //
 //        }
-
-
-
+//
+//
+//
 //        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
 //
 //        for(String str:commitId){
