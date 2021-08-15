@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class FindCommit {
     private static ArrayList commitList =  new ArrayList<String>();  //初始号数组
+    private static ArrayList commitListTime =  new ArrayList<String>();  //初始号数组
 
     public FindCommit(String repoPath) throws GitAPIException, IOException {
         Repository repo = new FileRepository(repoPath+ "/.git");
@@ -54,10 +55,9 @@ public class FindCommit {
                 }
 
                 if (foundInThisBranch) {
-//                    System.out.println(commit.getName());
-
-
                     commitList.add(commit.getName()); //添加commit
+                    commitListTime.add(commit.getCommitTime()); //添加commitTime
+
 
 //                    if(commit.getParents().length==0) {}
 //                    else if(commit.getParents().length==1){
@@ -77,11 +77,15 @@ public class FindCommit {
         }
 
         commitList  = single(commitList);
+        commitListTime  = single(commitListTime);
 
     }
 
     public static ArrayList getCommitList(){
         return commitList;
+    }
+    public static ArrayList getCommitListTime(){
+        return commitListTime;
     }
 
     public static ArrayList single(ArrayList al) {
