@@ -53,6 +53,27 @@ public class CodeTraceJavaApplication {
 //        System.out.println("relation");
     }
 
+    /***** 这两个函数用于给commit列表排序  ****/
+    public static String[] sortWithIndex (String[] strArr, int[] intIndex )
+    {
+        if (! isSorted(intIndex)){
+            final List<String> stringList = Arrays.asList(strArr);
+            Collections.sort(stringList, Comparator.comparing(s -> intIndex[stringList.indexOf(s)]));
+            return stringList.toArray(new String[stringList.size()]);
+        }
+        else
+            return strArr;
+    }
+    public static boolean isSorted(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i + 1] < arr[i]) {
+                return false;
+            };
+        }
+        return true;
+    }
+    /***** 这两个函数用于给commit列表排序  ****/
+
 
     public static void main(String[] args) throws IOException, GitAPIException {
 
@@ -90,11 +111,27 @@ public class CodeTraceJavaApplication {
 //        commitList.remove(0); //去除首个版本
 //        Collections.reverse(commitList);  //翻转列表
 
-        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]);
+
+        /**********将ArrayList转为Array**********/
+        String[] commitId = (String[]) commitList.toArray(new String[commitList.size()]); //获取commit
+
+        int[] commitTime = new int[commitListTime.size()];  //循环遍历获取committime
+        for(int i = 0;i<commitListTime.size();i++){
+            commitTime[i] = (int) commitListTime.get(i);
+        }
+
+
+        commitId = sortWithIndex(commitId,commitTime);
+        Arrays.sort(commitTime);
+
+
+
 //        String[] commitIdTime = (String[]) commitListTime.toArray(new String[commitListTime.size()]);
         for(int i=0;i<commitList.size();i++){
             System.out.println(commitId[i]);
-            System.out.println(commitListTime.get(i));
+            System.out.println(commitTime[i]);
+
+            
 
         }
 //        for(String str:commitId){
