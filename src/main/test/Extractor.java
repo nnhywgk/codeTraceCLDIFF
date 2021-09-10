@@ -1,9 +1,4 @@
-/**
- * @description: extractor fundamental information of project structure base on a single file
- * @author: fancying
- * @create: 2019-05-25 12:02
- **/
-package main.util;
+package main.test;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;

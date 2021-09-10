@@ -48,35 +48,48 @@ public class CLDiffAPI {
     public void initDataFromJson(Meta meta) {
         List<CommitFile> commitFiles = meta.getFiles();
         List<String> actions = meta.getActions();
-        for (int i = 0; i < commitFiles.size(); i++) {
-            CommitFile file = commitFiles.get(i);
-            if (file.getDiffPath() == null) {
-                continue;
-            }
-            String action = actions.get(i);
-            String fileFullName = file.getFile_name();
-            int index = fileFullName.lastIndexOf("/");
-            String fileName = fileFullName.substring(index + 1, fileFullName.length());
-            String prevFilePath = file.getPrev_file_path();
-            String currFilePath = file.getCurr_file_path();
-            String parentCommit = file.getParent_commit();
-            String basePath = clDiffCore.mFileOutputLog.metaLinkPath;
-            byte[] prevBytes = null;
-            byte[] currBytes = null;
-            try {
-                if (prevFilePath != null) {
-                    prevBytes = Files.readAllBytes(Paths.get(basePath + "/" + prevFilePath));
+        try{
+
+
+            for (int i = 0; i < commitFiles.size(); i++) {
+                CommitFile file = commitFiles.get(i);
+                if (file.getDiffPath() == null) {
+                    continue;
                 }
-                if (currFilePath != null) {
-                    currBytes = Files.readAllBytes(Paths.get(basePath + "/" + currFilePath));
+                String action = actions.get(i);
+                String fileFullName = file.getFile_name();
+                int index = fileFullName.lastIndexOf("/");
+                String fileName = fileFullName.substring(index + 1, fileFullName.length());
+                String prevFilePath = file.getPrev_file_path();
+                String currFilePath = file.getCurr_file_path();
+                String parentCommit = file.getParent_commit();
+                String basePath = clDiffCore.mFileOutputLog.metaLinkPath;
+                byte[] prevBytes = null;
+                byte[] currBytes = null;
+                try {
+                    if (prevFilePath != null) {
+                        prevBytes = Files.readAllBytes(Paths.get(basePath + "/" + prevFilePath));
+                    }
+                    if (currFilePath != null) {
+                        currBytes = Files.readAllBytes(Paths.get(basePath + "/" + currFilePath));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                FilePairData fp = new FilePairData(prevBytes, currBytes, basePath + "/" + prevFilePath, basePath + "/" + currFilePath, fileName);
+                fp.setParentCommit(parentCommit);
+                filePairDatas.add(fp);
             }
-            FilePairData fp = new FilePairData(prevBytes, currBytes, basePath + "/" + prevFilePath, basePath + "/" + currFilePath, fileName);
-            fp.setParentCommit(parentCommit);
-            filePairDatas.add(fp);
+
+
+        }catch (NullPointerException e){
+
+
+            System.out.println("捕捉到的异常：" + e.getMessage());
+
+
         }
+
     }
 
 
@@ -85,8 +98,8 @@ public class CLDiffAPI {
         Global.changeEntityFileNameMap = new HashMap<>();
         for (FilePairData fp : filePairDatas) {
             Global.parentCommit = fp.getParentCommit();
-            System.out.println(fp.getFileName());
-            Global.fileName = fp.getFileName();
+//            System.out.println(fp.getFileName());
+//            Global.fileName = fp.getFileName();
             if (fp.getPrev() == null && fp.getCurr() == null) {
                 continue;
             }
@@ -97,7 +110,19 @@ public class CLDiffAPI {
             } else {
                 this.clDiffCore.dooDiffFile(fp.getFileName(), fp.getPrev(), fp.getCurr(), absolutePath);
             }
-            this.fileChangeEntityData.put(fp.getParentCommit() + "@@@" + this.clDiffCore.changeEntityData.fileName, this.clDiffCore.changeEntityData);
+            try{
+
+
+                this.fileChangeEntityData.put(fp.getParentCommit() + "@@@" + this.clDiffCore.changeEntityData.fileName, this.clDiffCore.changeEntityData);
+
+
+            }catch (NullPointerException e){
+
+
+                System.out.println("捕捉到的异常：" + e.getMessage());
+
+
+            }
         }
         List<String> fileNames = new ArrayList<>(this.fileChangeEntityData.keySet());
         TotalFileLinks totalFileLinks = new TotalFileLinks();
@@ -124,8 +149,8 @@ public class CLDiffAPI {
         }
         new FileOuterLinksGenerator().checkSimilarity(this.fileChangeEntityData,totalFileLinks);
         clDiffCore.mFileOutputLog.writeLinkJson(totalFileLinks.toAssoJSonString());
-        System.out.println(totalFileLinks.toConsoleString());
-        fileChangeEntityData.clear();
+//        System.out.println(totalFileLinks.toConsoleString());
+//        fileChangeEntityData.clear();
     }
 
 

@@ -75,9 +75,9 @@ public class FindCommit {
                 }
             }
         }
-
-        commitList  = single(commitList);
-        commitListTime  = single(commitListTime);
+//
+//        commitList  = single(commitList);
+//        commitListTime  = single(commitListTime);
 
     }
 

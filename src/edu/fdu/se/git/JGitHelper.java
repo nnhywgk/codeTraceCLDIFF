@@ -158,9 +158,9 @@ public class JGitHelper extends JGitCommand {
             long endTime = System.nanoTime(); //获取结束时间
 //            System.out.println("CommitSum:" + isTraversed.size());
 //            System.out.println("totalCommitNum: " + commitNum);
-            System.out.println("totalChangedLineNumber: " + totalChangedLineNumber);
-            System.out.println("----total time:" + (endTime - startTime));
-            System.out.println("----commitnum "+commitNum);
+//            System.out.println("totalChangedLineNumber: " + totalChangedLineNumber);
+//            System.out.println("----total time:" + (endTime - startTime));
+//            System.out.println("----commitnum "+commitNum);
         } catch (MissingObjectException e) {
             e.printStackTrace();
         } catch (IncorrectObjectTypeException e) {
@@ -179,7 +179,7 @@ public class JGitHelper extends JGitCommand {
 
     public int getCommitFileEditLineNumber(RevCommit commit) {
         try {
-            System.out.println("----commit id:" + commit.getName());
+//            System.out.println("----commit id:" + commit.getName());
             int count = 0;
             long startTime = System.nanoTime();   //获取开始时间
             RevCommit[] parentsCommits = commit.getParents();
@@ -225,7 +225,7 @@ public class JGitHelper extends JGitCommand {
             }
             long endTime = System.nanoTime(); //获取结束时间
 
-            System.out.println("----one commit time:" + (endTime - startTime));
+//            System.out.println("----one commit time:" + (endTime - startTime));
             return 0;
         } catch (MissingObjectException e) {
             e.printStackTrace();

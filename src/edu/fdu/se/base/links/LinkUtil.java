@@ -27,8 +27,16 @@ public class LinkUtil {
                 break;
             }
             if(t.getAstNode().getClass().toString().endsWith("Declaration")){
-                MethodDeclaration md = (MethodDeclaration) t.getAstNode();
-                return md.getName().toString();
+
+                    try {
+                        MethodDeclaration md = (MethodDeclaration) t.getAstNode();
+                        return md.getName().toString();
+                    } catch (ClassCastException e) {
+                        e.printStackTrace();
+                    }
+
+
+
             }
             t = (Tree) t.getParent();
         }
